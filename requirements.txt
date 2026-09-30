@@ -7,6 +7,10 @@ pydantic>=2.10.0
 python-dotenv>=1.0.0
 rich>=13.0.0
 
+# Testing & QA
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+
 # Future Integrations (Docker, Git, GitHub)
 docker>=7.0.0
 gitpython>=3.1.0
