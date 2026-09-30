@@ -60,22 +60,30 @@ class CreewLoopApp(App):
 
         yield Footer()
 
+    def _dispatch_to_app(self, fn: Callable, *args: Any, **kwargs: Any) -> None:
+        """Invokes a callback safely regardless of whether called from a worker thread or the main event loop."""
+        import threading
+        if getattr(self, "_thread_id", None) == threading.get_ident():
+            fn(*args, **kwargs)
+        else:
+            self.call_from_thread(fn, *args, **kwargs)
+
     def on_mount(self) -> None:
         """Register listeners and thread callbacks on mount."""
         decision_mgr = get_decision_manager()
         bus = get_event_bus()
 
-        # Connect DecisionManager to Textual via call_from_thread for thread safety
+        # Connect DecisionManager to Textual via _dispatch_to_app for thread safety
         decision_mgr.register_ui_callback(
-            lambda req: self.call_from_thread(self._on_decision_requested, req)
+            lambda req: self._dispatch_to_app(self._on_decision_requested, req)
         )
 
         # Connect EventBus to Textual UI
         bus.subscribe_logs(
-            lambda log_evt: self.call_from_thread(self._on_log_event, log_evt)
+            lambda log_evt: self._dispatch_to_app(self._on_log_event, log_evt)
         )
         bus.subscribe_files(
-            lambda file_evt: self.call_from_thread(self._on_file_event, file_evt)
+            lambda file_evt: self._dispatch_to_app(self._on_file_event, file_evt)
         )
 
         # Initial logs
@@ -153,6 +161,15 @@ class CreewLoopApp(App):
         self.update_status("⚡ RUNNING DEMO", color="#a371f7")
         self.run_demo_worker(prompt=message.prompt)
 
+    def action_stop_execution(self) -> None:
+        """Stops the current execution and clears pending decisions."""
+        self.on_config_sidebar_stop_factory()
+
+    def action_clear_logs(self) -> None:
+        """Clears all messages from the execution log stream."""
+        exec_panel = self.query_one("#execution-panel", ExecutionPanel)
+        exec_panel.clear_logs()
+
     def on_config_sidebar_stop_factory(self) -> None:
         """User requested stop."""
         get_decision_manager().cancel("User pressed stop")
@@ -169,6 +186,7 @@ class CreewLoopApp(App):
         """Ensure all worker threads and pending decisions are released on exit."""
         self._is_running = False
         get_decision_manager().cancel("Application closing")
+        get_decision_manager().unregister_ui_callback()
 
     def update_status(self, text: str, color: str = "#8b949e") -> None:
         if not self.is_running:
