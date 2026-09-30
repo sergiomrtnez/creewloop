@@ -1,0 +1,127 @@
+Screen {
+    background: #0d1117;
+    color: #c9d1d9;
+    layout: vertical;
+}
+
+#header-bar {
+    height: 3;
+    dock: top;
+    background: #161b22;
+    border-bottom: solid #30363d;
+    padding: 0 1;
+    layout: horizontal;
+    align-vertical: middle;
+}
+
+#header-title {
+    color: #58a6ff;
+    text-style: bold;
+    width: auto;
+}
+
+#header-subtitle {
+    color: #8b949e;
+    margin-left: 2;
+    width: 1fr;
+}
+
+#status-badge {
+    color: #f0883e;
+    text-style: bold;
+    background: #21262d;
+    padding: 0 2;
+    border: round #30363d;
+}
+
+#main-container {
+    height: 1fr;
+    layout: horizontal;
+}
+
+ConfigSidebar {
+    width: 36;
+    background: #161b22;
+    border-right: solid #30363d;
+    padding: 1;
+}
+
+ExecutionPanel {
+    width: 1fr;
+    height: 100%;
+    border-right: solid #30363d;
+    padding: 1;
+    background: #0d1117;
+}
+
+DocumentViewer {
+    width: 1fr;
+    height: 100%;
+    padding: 1;
+    background: #0d1117;
+}
+
+.panel-header {
+    text-style: bold;
+    color: #58a6ff;
+    padding-bottom: 1;
+    margin-bottom: 1;
+    border-bottom: solid #21262d;
+}
+
+#log-stream {
+    height: 1fr;
+    background: #161b22;
+    border: solid #30363d;
+    padding: 1;
+}
+
+DecisionBox {
+    height: auto;
+    min-height: 7;
+    background: #1c2128;
+    border: double #d29922;
+    padding: 1;
+    margin-top: 1;
+}
+
+.decision-title {
+    color: #d29922;
+    text-style: bold;
+}
+
+.decision-question {
+    color: #f0f6fc;
+    text-style: bold;
+    margin-top: 1;
+    margin-bottom: 1;
+}
+
+.options-grid {
+    height: auto;
+    layout: horizontal;
+    margin-top: 1;
+    margin-bottom: 1;
+}
+
+.option-btn {
+    margin-right: 1;
+}
+
+.custom-row {
+    height: auto;
+    layout: horizontal;
+    margin-top: 1;
+}
+
+.custom-input {
+    width: 1fr;
+    margin-right: 1;
+}
+
+.viewer-scroll {
+    height: 1fr;
+    background: #161b22;
+    padding: 1;
+    border: solid #30363d;
+}

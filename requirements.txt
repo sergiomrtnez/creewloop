@@ -1,0 +1,13 @@
+# Core Frameworks
+crewai>=1.14.0
+crewai-tools>=1.14.0
+textual>=8.0.0
+litellm>=1.40.0
+pydantic>=2.10.0
+python-dotenv>=1.0.0
+rich>=13.0.0
+
+# Future Integrations (Docker, Git, GitHub)
+docker>=7.0.0
+gitpython>=3.1.0
+PyGithub>=2.0.0
