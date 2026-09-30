@@ -14,11 +14,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
+import pytest
 from src.ui.app import CreewLoopApp
 from src.ui.components.execution_panel import DecisionBox
 from textual.widgets import Button
 
 
+@pytest.mark.asyncio
 async def test_full_interactive_ui_flow():
     print("==================================================================")
     print("[TEST] Full Interactive Textual UI & Decision Flow")
