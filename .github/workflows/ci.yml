@@ -40,10 +40,11 @@ jobs:
       - name: Validate Python compilation (syntax check)
         run: |
           python -m compileall -q src/
+          python -m compileall -q tests/
           python -m compileall -q run.py
           python -m compileall -q test_decision_flow.py
           python -m compileall -q test_ui_interactive.py
 
-      - name: Execute DecisionManager concurrency unit test
+      - name: Execute Full Pytest Test Suite
         run: |
-          python test_decision_flow.py
+          pytest -v
