@@ -191,3 +191,8 @@ class ExecutionPanel(Vertical):
         """Remove any active decision box."""
         mount_point = self.query_one("#decision-mount", Container)
         mount_point.remove_children()
+
+    def clear_logs(self) -> None:
+        """Clear all messages from the log stream."""
+        log_widget = self.query_one("#log-stream", RichLog)
+        log_widget.clear()
